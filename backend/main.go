@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+    "os"
 
 	_ "github.com/lib/pq"
 	"todo-api/pkg/database"
@@ -17,7 +18,7 @@ type Todo struct {
 }
 
 func main() {
-	// Connect to database
+    // Connect to database
     db, err := database.ConnectDB()
     if err != nil {
         log.Fatal("Error connecting to database:", err)
@@ -30,11 +31,17 @@ func main() {
         log.Fatal("Error creating todo table:", err)
     }
 
-	// Get router from routes package
+    // Get router from routes package
     router := routes.SetupRoutes(db)
 
-    // Start server
-    log.Fatal(http.ListenAndServe(":8000", middleware.JsonContentTypeMiddleware(router)))
-}
+    // Get the port from the PORT environment variable provided by Heroku
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8000"
+    }
 
+    // Start server
+    log.Printf("Server listening on port %s", port)
+    log.Fatal(http.ListenAndServe(":"+port, middleware.JsonContentTypeMiddleware(router)))
+}
 
