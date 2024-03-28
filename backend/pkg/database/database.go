@@ -3,6 +3,7 @@ package database
 import (
     "database/sql"
     "os"
+    "time"
 
     _ "github.com/lib/pq"
 )
