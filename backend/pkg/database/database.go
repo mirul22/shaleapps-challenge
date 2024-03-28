@@ -7,21 +7,28 @@ import (
     _ "github.com/lib/pq"
 )
 
+const maxRetries = 10
+const retryDelay = 5 * time.Second
+
 func ConnectDB() (*sql.DB, error) {
-    // Connect to database
-    db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-    if err != nil {
-        return nil, err
+    var db *sql.DB
+    var err error
+
+    // Retry connecting to the database
+    for i := 0; i < maxRetries; i++ {
+        // Attempt to connect to the database
+        db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+        if err == nil {
+            // Connection successful, return the database object
+            return db, nil
+        }
+
+        // Connection failed, print error and retry
+        time.Sleep(retryDelay)
     }
 
-    // Check if the connection is established
-    err = db.Ping()
-    if err != nil {
-        db.Close()
-        return nil, err
-    }
-
-    return db, nil
+    // Return the last error encountered if maximum retries reached
+    return nil, err
 }
 
 func CreateTodoTable(db *sql.DB) error {
