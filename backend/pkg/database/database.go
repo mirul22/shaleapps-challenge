@@ -26,7 +26,7 @@ func ConnectDB() (*sql.DB, error) {
 
 func CreateTodoTable(db *sql.DB) error {
     // Create the table if it doesn't exist
-    _, err := db.Exec(`CREATE TABLE IF NOT EXISTS todo (
+    _, err := db.Exec(`CREATE TABLE IF NOT EXISTS todos (
         id SERIAL PRIMARY KEY,
         task TEXT,
         completed BOOLEAN
