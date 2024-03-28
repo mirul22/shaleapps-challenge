@@ -75,6 +75,8 @@ func UpdateTodo(db *sql.DB) http.HandlerFunc {
 		var todo Todo
 		json.NewDecoder(r.Body).Decode(&todo)
 
+		log.Println("Received todo:", todo)
+
 		vars := mux.Vars(r)
 		id := vars["id"]
 

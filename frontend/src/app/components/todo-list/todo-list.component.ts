@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Todo } from '../../todo';
 import { TodoService } from '../../todo.service';
 import { Router } from '@angular/router';
@@ -7,13 +7,16 @@ import { Router } from '@angular/router';
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html'
 })
-
 export class TodoListComponent implements OnInit {
   
-  todos!: Todo[];
+  todos: Todo[] = []; 
   todo: Todo = new Todo();
+  @ViewChild('editInput') editInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private todoService: TodoService, private router: Router) { }
+  constructor(
+    private todoService: TodoService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.loadTodos();
@@ -22,18 +25,37 @@ export class TodoListComponent implements OnInit {
   loadTodos() {
     this.todoService.getTodos().subscribe(data => {
       this.todos = data;
+      this.todos.forEach(todo => todo.editMode = false);
     });
   }
 
   deleteTodo(todo: Todo) {
     if (todo && todo.id !== undefined) {
-      // ask user to confirm the deletion
-      if (confirm(`Are you sure you want to delete the todo with id ${todo.id}?`)) {
+      const confirmation = confirm(`Are you sure you want to delete the todo with id ${todo.id}?`);
+      if (confirmation) {
         this.todoService.deleteTodo(todo.id).subscribe(() => {
-          // Remove the deleted todo from the array
           this.todos = this.todos.filter(t => t.id !== todo.id);
         });
       }
+    }
+  }
+
+  toggleEditMode(todo: Todo) {
+    todo.editMode = !todo.editMode;
+    if (todo.editMode) {
+      todo.updatedTask = todo.task;
+      setTimeout(() => this.editInput.nativeElement.focus()); 
+    }
+  }
+
+  saveEdit(todo: Todo) {
+    todo.task = todo.updatedTask;
+    todo.editMode = false;
+  
+    if (todo && todo.id !== undefined) {
+      this.todoService.editTodo(todo).subscribe(() => {
+        this.todoService.updateTodos();
+      });
     }
   }
 }

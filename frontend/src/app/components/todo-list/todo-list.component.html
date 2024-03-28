@@ -1,10 +1,25 @@
-<div *ngIf="todos.length > 0" class="container mx-auto py-4">
+<div *ngIf="todos && todos.length > 0" class="container mx-auto py-4">
   <div *ngFor="let todo of todos" class="bg-gray-100 p-4 mb-4 rounded-lg relative flex items-center justify-between">
-    <ul>
-      <li class="text-gray-800">{{ todo.task }}</li>
-    </ul>
-    <button class="p-2 flex items-center justify-center text-black" (click)="deleteTodo(todo)">
-      <i class="material-icons">delete</i>
-    </button>
+    <ng-container *ngIf="!todo.editMode; else editModeTemplate">
+      <div (click)="toggleEditMode(todo)">
+        <ul>
+          <li class="text-gray-800">{{ todo.task }}</li>
+        </ul>
+      </div>
+    </ng-container>
+    <ng-template #editModeTemplate>
+      <div>
+        <input #editInput type="text" [(ngModel)]="todo.updatedTask" class="border-0 mr-3 p-3 bg-gray-100 text-black focus:outline-none focus:shadow-none" [style.border-color]="todo.editMode ? 'transparent' : 'inherit'">
+        <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" (click)="saveEdit(todo)">Save</button>
+      </div>
+    </ng-template>
+    <div class="p-2 flex items-center justify-center">
+      <button class="text-black" (click)="toggleEditMode(todo)">
+        <i class="material-icons">edit</i>
+      </button>
+      <button class="text-black" (click)="deleteTodo(todo)">
+        <i class="material-icons">delete</i>
+      </button>
+    </div>
   </div>
 </div>
