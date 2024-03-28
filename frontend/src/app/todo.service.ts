@@ -7,8 +7,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 
 export class TodoService {
-  // private baseUrl = "http://localhost:8000/api/todos";
-  private baseUrl = "https://blooming-everglades-24065-95422c9c99ea.herokuapp.com/api/todos";
+  private baseUrl = "http://localhost:8000/api/todos";
+  // private baseUrl = "https://blooming-everglades-24065-95422c9c99ea.herokuapp.com/api/todos";
   private todosSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   constructor(private httpClient: HttpClient) { 
