@@ -7,9 +7,9 @@ This project is a Todo List app built as part of the ShaleApps Full Stack Engine
 
 ## Basic Criteria
 
-- **Storage**: Items are stored in a relational/SQL database:
-- **Version Control**: The project is version controlled using Git and hosted on GitHub: 
-- **Deployment**: The app is deployed online for accessibility on Heroku:
+- **Storage**: Items are stored in a relational/SQL database
+- **Version Control**: The project is version controlled using Git and hosted on GitHub: https://github.com/mirul22/shaleapps-challenge
+- **Deployment**: The app is deployed online for accessibility on Heroku
 
 ## Technologies Used
 
@@ -25,34 +25,55 @@ This project is a Todo List app built as part of the ShaleApps Full Stack Engine
 - **User-friendly Interface**: Intuitive design for seamless user experience.
 - **Efficient Storage**: Utilizes a relational database for efficient data management.
 
+## Deployment
+
+- **Frontend**: https://shaleapps-challenge-frontend-2d7ea34c0d13.herokuapp.com/
+- **Backend**: https://blooming-everglades-24065-95422c9c99ea.herokuapp.com/api/todos
+
 ## Installation and Usage
 
-To run this project locally using Docker, follow these steps:
+To run this project locally using Docker, follow these steps (Run in your terminal):
 
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/mirul22/shaleapps-challenge.git
    ```
 
-2. Navigate to the project directory:
+### Frontend
+
+2. Navigate to the project directory (frontend):
 
     ```bash
-    cd <project_directory>
+    cd frontend
     ```
 
-3. Build the Docker containers:
+3. Install all dependencies
 
     ```bash
-    docker-compose build
+    npm install
     ```
-
-4. Start the Docker containers:
+4. Serve the project
 
     ```bash
-    docker-compose up
+    ng serve
     ```
 
+5. Access the app via your web browser at http://localhost:4200.
+
+### Backend
+
+2. Navigate to the project directory (backend):
+
+    ```bash
+    cd backend
+    ```
+
+3. Build and start the Docker containers:
+
+    ```bash
+    docker-compose up --build
+    ```
 5. Access the app via your web browser at http://localhost:8080.
 
 ## Getting Started
