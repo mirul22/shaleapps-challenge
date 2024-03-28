@@ -1,7 +1,10 @@
 <div *ngIf="todos.length > 0" class="container mx-auto py-4">
-    <div *ngFor="let todo of todos" class=" bg-gray-100 p-4 mb-4 rounded-lg">
-      <ul>
-        <li class="text-gray-800">{{ todo.task }}</li>
-      </ul>
-    </div>
+  <div *ngFor="let todo of todos" class="bg-gray-100 p-4 mb-4 rounded-lg relative flex items-center justify-between">
+    <ul>
+      <li class="text-gray-800">{{ todo.task }}</li>
+    </ul>
+    <button class="p-2 flex items-center justify-center text-black" (click)="deleteTodo(todo)">
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
 </div>

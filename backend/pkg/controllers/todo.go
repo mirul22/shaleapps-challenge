@@ -93,19 +93,18 @@ func DeleteTodo(db *sql.DB) http.HandlerFunc {
 		vars := mux.Vars(r)
 		id := vars["id"]
 
-		var todo Todo
-		err := db.QueryRow("DELETE FROM todos WHERE id=$1 RETURNING id, task, completed", id).Scan(&todo.ID, &todo.Task, &todo.Completed)
+		result, err := db.Exec("DELETE FROM todos WHERE id=$1", id)
 		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
 			return
-		} else {
-			_, err := db.Exec("DELETE FROM todos WHERE id=$1", id)
-			if err != nil {
-				w.WriteHeader(http.StatusNotFound)
-				return
-			}
-
-			json.NewEncoder(w).Encode("Todo deleted successfully")
 		}
+
+		rowsAffected, _ := result.RowsAffected()
+		if rowsAffected == 0 {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		json.NewEncoder(w).Encode("Todo deleted successfully")
 	}
 }
