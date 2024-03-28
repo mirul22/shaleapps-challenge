@@ -6,7 +6,7 @@ services:
     image: shaleapps-challenge/go-todo-app:1.0.0
     build: .
     environment:
-      DATABASE_URL: "host=go_todo_db user=postgres password=postgres dbname=postgres sslmode=disable"
+      DATABASE_URL: "postgres://postgres:postgres@go_todo_db:5432/postgres?sslmode=disable"
     ports:
       - "8000:8000"
     depends_on:
