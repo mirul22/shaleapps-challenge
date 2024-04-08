@@ -74,7 +74,7 @@ To run this project locally using Docker, follow these steps (Run in your termin
     ```bash
     docker-compose up --build
     ```
-5. Access the app via your web browser at http://localhost:8080.
+5. Access the app via your web browser at http://localhost:8000/api/todos.
 
 ## Getting Started
 
@@ -99,7 +99,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 - [Go Documentation](https://go.dev/)
 - [Angular Documentation](https://angular.io/)
-- [PrimeNG Documentation](https://primeng.org/)
 - [Docker Documentation](https://docs.docker.com/)
 - [Heroku Documentation](https://devcenter.heroku.com/)
 
